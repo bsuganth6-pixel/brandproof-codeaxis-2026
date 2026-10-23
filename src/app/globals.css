@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-bench: #e6ebef;
+  --color-sheet: #ffffff;
+  --color-ink: #1f2429;
+  --color-ink-2: #56616c;
+  --color-line: #cbd3da;
+  --color-line-2: #dfe5ea;
+  --color-magenta: #d81b60;
+  --color-magenta-ink: #a8124a;
+  --color-magenta-soft: #fbe3ec;
+  --color-yellow: #ffd60a;
+  --color-yellow-ink: #6e5200;
+  --color-yellow-soft: #fff4b8;
+  --color-cyan: #0a8fce;
+  --color-cyan-ink: #076a99;
+  --color-cyan-soft: #daf0fb;
+  --color-teal: #08684a;
+  --color-teal-soft: #d7efe5;
+}
+
+html { color-scheme: light; }
+body { background: var(--color-bench); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+
+/* The proof sheet: white page with printer's crop marks outside each corner. */
+.crop {
+  --mark: #8895a1;
+  padding: 20px;
+  background:
+    linear-gradient(var(--mark), var(--mark)) left 0 top 20px / 14px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) left 20px top 0 / 1px 14px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) right 0 top 20px / 14px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) right 20px top 0 / 1px 14px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) left 0 bottom 20px / 14px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) left 20px bottom 0 / 1px 14px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) right 0 bottom 20px / 14px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) right 20px bottom 0 / 1px 14px no-repeat;
+}
+.sheet { background: var(--color-sheet); border: 1px solid var(--color-line); }
+
+/* Highlighter marks, one ink per severity. */
+.pen { cursor: pointer; padding: 0 1px; border-radius: 1px; color: inherit; transition: background-color .12s; }
+.pen-critical { background: color-mix(in srgb, var(--color-magenta) 20%, transparent); box-shadow: inset 0 -2px 0 var(--color-magenta); }
+.pen-major { background: color-mix(in srgb, var(--color-yellow) 60%, transparent); box-shadow: inset 0 -2px 0 #c29b00; }
+.pen-minor { background: color-mix(in srgb, var(--color-cyan) 15%, transparent); box-shadow: inset 0 -2px 0 var(--color-cyan); }
+.pen-dismissed { background: transparent; box-shadow: inset 0 -1px 0 var(--color-line); opacity: .65; }
+.pen-active { outline: 2px solid var(--color-ink); outline-offset: 1px; }
+
+.stamp {
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 3px double var(--color-teal); color: var(--color-teal); border-radius: 10px; padding: 8px 16px;
+  transform: rotate(-3deg); font-weight: 700; line-height: 1.15; text-align: center;
+}
+
+@media print {
+  header, .no-print { display: none !important; }
+  body { background: #fff; }
+  .crop { padding: 0; background: none; }
+}
